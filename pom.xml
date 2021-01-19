@@ -8,10 +8,18 @@
     <artifactId>logBysj</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
+<!--    <profiles>-->
+<!--        <promagent.framework.version>1.0-SNAPSHOT</promagent.framework.version>-->
+<!--    </profiles>-->
 
     <dependencies>
 
+        <dependency>
+            <groupId>io.promagent</groupId>
+            <artifactId>promagent-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope> <!-- provided via the system class loader -->
+        </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -28,6 +36,12 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.70</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -36,6 +50,36 @@
             <scope>provided</scope>
         </dependency>
 
-
     </dependencies>
+
+    <build>
+        <finalName>logAgent</finalName>
+        <plugins>
+            <plugin>
+                  <groupId>io.promagent</groupId>
+                    <artifactId>promagent-maven-plugin</artifactId>
+                    <version>1.0-SNAPSHOT</version>
+                    <executions>
+                        <execution>
+                            <id>promagent</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>utf-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
 </project>

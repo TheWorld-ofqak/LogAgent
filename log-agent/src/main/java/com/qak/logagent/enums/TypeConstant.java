@@ -3,7 +3,7 @@ package com.qak.logagent.enums;
 public enum TypeConstant {
 
     Normal(0,"正常的http请求"),
-    CREATE(1,"构建的http请求"),
+    CREATE(1,"Httpclient的http请求"),
     ASYNC(2,"异步请求"),
     DNS(3,"DNS的请求");
 

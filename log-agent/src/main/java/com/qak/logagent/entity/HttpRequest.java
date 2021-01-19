@@ -12,19 +12,22 @@ import java.util.Map;
 public class HttpRequest {
 
 
-    private Map<String,String>  header;
+
     private String url;
+    private Map<String,String>  header;
     private Map<String,String> params;
 
     private String responseBody;
 
 
 
-    public HttpRequest(Map<String, String> header, String url, Map<String, String> params, String responseBody) {
+    public HttpRequest(String url,Map<String, String> header , Map<String, String> params) {
         this.header = header;
         this.url = url;
         this.params = params;
-        this.responseBody = responseBody;
+    }
+    public HttpRequest(){
+
     }
 
     public Map<String, String> getHeader() {
@@ -57,5 +60,15 @@ public class HttpRequest {
 
     public void setResponseBody(String responseBody) {
         this.responseBody = responseBody;
+    }
+
+    @Override
+    public String toString() {
+        return "HttpRequest{" +
+                "url='" + url + '\'' +
+                ", header=" + header +
+                ", params=" + params +
+                ", responseBody='" + responseBody + '\'' +
+                '}';
     }
 }
