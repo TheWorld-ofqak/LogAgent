@@ -1,13 +1,12 @@
 package com.qak.logagent.entity;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.qak.logagent.enums.TypeConstant;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import com.qak.logagent.entity.Method;
 
 /**
- * @Description 请描述类的业务用途
+ * @Description Log 实体对象
  * @Author ankangqi
  * @Date 2020/12/12 4:38 下午
  **/
@@ -17,9 +16,18 @@ public class LogObject {
     private  Long traceId;
     private  String  type= TypeConstant.Normal.getDesc();
 
-    private Map<String,Object> request = new ConcurrentHashMap<>();
-    private Map<String,Object> method  = new ConcurrentHashMap<>();
+    private  HttpRequest httpRequest;
+    private  Method method;
+    private  Object tempDate;
+    private  String msg;
 
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
     public Long getTraceId() {
         return traceId;
@@ -37,24 +45,47 @@ public class LogObject {
         this.type = type;
     }
 
-    public Map<String, Object> getRequest() {
-        return request;
+    public void setHttpRequest(HttpRequest httpRequesT) {
+        this.httpRequest = httpRequesT;
     }
 
-    public void setRequest(Map<String, Object> header,String url,Map<String, String> params) {
-      // request.put()
+    public HttpRequest getHttpRequest() {
+        return httpRequest;
     }
 
-    public Map<String, Object> getMethod() {
+    public Method getMethod() {
         return method;
     }
 
-    public void setMethod(Map<String, Object> method) {
+    public void setMethod(Method method) {
         this.method = method;
     }
 
+    public Object getTempDate() {
+        return tempDate;
+    }
 
+    public void setTempDate(Object tempDate) {
+        this.tempDate = tempDate;
+    }
 
+    public String getLogJSON() {
+        JSONObject resultJson = new JSONObject();
+        resultJson.put("traceId",traceId);
+        resultJson.put("type",type);
+        resultJson.put("Request",httpRequest);
+        resultJson.put("method",method);
+        resultJson.put("msg",msg);
+        return resultJson.toJSONString();
+    }
+
+    //    public void setLogObject(Long traceId, String type, Map<String, Object> request, Map<String, Object> method) {
+//        this.traceId = traceId;
+//        this.type = type;
+//        this.request = request;
+//        this.method = method;
+//    }
+//
 
 
 }

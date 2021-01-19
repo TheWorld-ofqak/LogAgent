@@ -10,6 +10,10 @@ import java.util.LinkedHashMap;
  * @Description
  * @Author ankangqi
  * @Date 2020/12/12 4:31 下午
+ *
+ * mdc
+ * https://blog.csdn.net/userwyh/article/details/52862216
+ *
  **/
 public class LogContext {
 
@@ -19,7 +23,6 @@ public class LogContext {
       public static LogObject get(){  return  threadLocal.get(); }
 
       public static void clear(){ threadLocal.remove(); }
-
 
 }
 
