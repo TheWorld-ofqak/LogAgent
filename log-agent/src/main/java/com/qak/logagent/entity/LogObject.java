@@ -13,7 +13,7 @@ import com.qak.logagent.entity.Method;
 public class LogObject {
 
 
-    private  Long traceId;
+   // private  Long traceId;
     private  String  type= TypeConstant.Normal.getDesc();
 
     private  HttpRequest httpRequest;
@@ -29,13 +29,13 @@ public class LogObject {
         this.msg = msg;
     }
 
-    public Long getTraceId() {
-        return traceId;
-    }
-
-    public void setTraceId(Long traceId) {
-        this.traceId = traceId;
-    }
+//    public Long getTraceId() {
+//        return traceId;
+//    }
+//
+//    public void setTraceId(Long traceId) {
+//        this.traceId = traceId;
+//    }
 
     public String getType() {
         return type;
@@ -57,8 +57,9 @@ public class LogObject {
         return method;
     }
 
-    public void setMethod(Method method) {
+    public LogObject setMethod(Method method) {
         this.method = method;
+        return this;
     }
 
     public Object getTempDate() {
@@ -71,7 +72,7 @@ public class LogObject {
 
     public String getLogJSON() {
         JSONObject resultJson = new JSONObject();
-        resultJson.put("traceId",traceId);
+      //  resultJson.put("traceId",traceId);
         resultJson.put("type",type);
         resultJson.put("Request",httpRequest);
         resultJson.put("method",method);

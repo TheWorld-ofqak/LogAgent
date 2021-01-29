@@ -12,8 +12,10 @@
         <module name="promagent-internal" />
         <module name="promagent-exporter" />
         <module name="promagent-maven-plugin" />
-        <module name="promagent-example" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="promagent-example" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

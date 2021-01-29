@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 import static com.qak.logagent.utils.HttpRequestUtils.getHeaders;
@@ -38,6 +39,30 @@ public class LogObjectProxy {
 
     }
 
+    public static  void setResponse(HttpServletResponse response){
+
+
+        LogObject currLogObject = LogContext.get();
+        currLogObject.getHttpRequest().setResponseBody(response.toString());
+
+
+    }
+
+
+
+    public static void setMethod(Long execTime,Throwable error, Object ret, String sign, String type, Object... args){
+        Method method = LogContext.get().getMethod();
+
+        method.setMethodSignature(sign);
+        method.setExecTime(execTime);
+        method.setArgs(args);
+        method.setReturnResult(ret);
+        method.setMethodThrow(error);
+        method.setType(type);
+    }
+
+
+
     public static void setTempDate(Object tempObject){
 
         LogObject currLogObject = LogContext.get();
@@ -54,18 +79,15 @@ public class LogObjectProxy {
 
 
 
+    public static void doLog() {
 
-    public static void doLog(Method method) {
-        LogObject logObject = LogContext.get();
-        logObject.setMethod(method);
-        String msg = logObject.getLogJSON();
+        String jsonMsg = LogContext.get()
+                                   .getLogJSON();
 
-        if (method.getMethodThrow() !=null){
-            logger.error(msg);
-        } else {
-            logger.info(msg);
-        }
+        logger.info(jsonMsg);
+
     }
+
 
 
 

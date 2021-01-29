@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="web" url="file://$PROJECT_DIR$/promagent/promagent-framework/promagent-exporter" />
+    <file type="web" url="file://$PROJECT_DIR$/promagent-framework/promagent-exporter" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -10,6 +10,11 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/promagent/promagent-example/pom.xml" />
         <option value="$PROJECT_DIR$/promagent/promagent-framework/pom.xml" />
+        <option value="$PROJECT_DIR$/promagent-framework/promagent-agent/pom.xml" />
+        <option value="$PROJECT_DIR$/promagent-framework/promagent-internal/pom.xml" />
+        <option value="$PROJECT_DIR$/promagent-framework/promagent-exporter/pom.xml" />
+        <option value="$PROJECT_DIR$/promagent-framework/promagent-api/pom.xml" />
+        <option value="$PROJECT_DIR$/promagent-framework/pom.xml" />
       </list>
     </option>
   </component>
