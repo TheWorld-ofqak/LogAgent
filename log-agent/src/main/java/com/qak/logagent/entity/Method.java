@@ -13,13 +13,15 @@ public class Method {
 
 
     private String methodSignature;
-    private String[] args;
+    private Object[] args;
     private Long execTime;
     private Object returnResult;
     private Throwable methodThrow;
     private String type;
 
+    public Method(){
 
+    }
 
 
     public String getMethodSignature() {
@@ -30,11 +32,11 @@ public class Method {
         this.methodSignature = methodSignature;
     }
 
-    public String[] getArgs() {
+    public Object[] getArgs() {
         return args;
     }
 
-    public void setArgs(String[] args) {
+    public void setArgs(Object[] args) {
         this.args = args;
     }
 

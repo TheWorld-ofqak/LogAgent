@@ -3,19 +3,15 @@ package com.qak.logagent.hooks;
 
 import com.qak.logagent.Logger;
 import com.qak.logagent.core.LogObjectProxy;
-import com.qak.logagent.entity.Method;
 import com.qak.logagent.enums.TypeConstant;
 import io.promagent.annotations.After;
 import io.promagent.annotations.Before;
 import io.promagent.annotations.Hook;
+import io.promagent.annotations.Thrown;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
-import java.util.UUID;
 
 @Hook( instruments ={
         "javax.servlet.http.HttpServlet",
@@ -23,18 +19,37 @@ import java.util.UUID;
 })
 public class HttpServletHook {
 
+    @Before(method = {"service"})
+    public void serviceBefore (ServletRequest request, ServletResponse response){
+        doBefore(request,response);
+    }
+    @Before(method = {"doFilter"})
+    public void doFilterBefore(ServletRequest request, ServletResponse response, FilterChain chain){
+        doBefore(request,response);
+    }
 
-    @Before(method = {"service","doFilter"})
-    public void before(ServletRequest httpRequest,ServletResponse httpResponse){
+    @After(method = {"service"})
+    public void serviceAfter(ServletRequest request, ServletResponse response , @Thrown Throwable t){
+        doAfter(request,response ,t, "service");
+    }
+
+    @After(method = {"doFilter"})
+    public void serviceAfter(ServletRequest request, ServletResponse response, FilterChain chain, @Thrown Throwable t){
+        doAfter(request,response ,t, "doFilter");
+    }
+
+
+
+    public void doBefore(ServletRequest httpRequest,ServletResponse httpResponse){
 
         try {
+
             HttpServletRequest request  =(HttpServletRequest)httpRequest;
-            String logId = UUID.randomUUID().toString().substring(0,11); //request.getHeader("TRACE_ID");
 
             long startTime = System.currentTimeMillis();
             LogObjectProxy.setTempDate(startTime);
 
-            Logger.httpServletBefore(logId,request);
+            LogObjectProxy.setRequest(request);
 
         } catch (Throwable e){
             Logger.error(e);
@@ -43,14 +58,12 @@ public class HttpServletHook {
     }
 
 
-    @After(method = {"service"})
-    public void after(ServletRequest httpRequest,ServletResponse httpResponse){
+    public void doAfter(ServletRequest httpRequest,ServletResponse httpResponse,Throwable t, String signature){
 
 
         try {
             long endTime = System.currentTimeMillis();
-            long spendTime = endTime - (long)LogObjectProxy.getTempDate();
-            String type = TypeConstant.Normal.name();
+            long execTime = endTime - (long)LogObjectProxy.getTempDate();
 
             int bodyLength = httpResponse.getBufferSize();
             byte[] buffer = new byte[bodyLength];
@@ -58,13 +71,9 @@ public class HttpServletHook {
             ServletOutputStream outputStream =  httpResponse.getOutputStream();
             outputStream.write(buffer,0,bodyLength);
 
-            Method method = new Method();
-            method.setExecTime(spendTime);
-            method.setReturnResult(Arrays.toString(buffer));
-            method.setType(type);
+            LogObjectProxy.setMethod(execTime,t,httpResponse.toString(), Arrays.toString(buffer),TypeConstant.Normal.name(),null);
 
-            Logger.info(method);
-            Logger.httpServletAfter();
+            LogObjectProxy.doLog();
 
         } catch (Exception e){
             Logger.error(e);

@@ -2,12 +2,12 @@ package com.qak.logagent;
 
 
 import com.qak.logagent.core.LogObjectProxy;
-import com.qak.logagent.entity.Method;
 import com.qak.logagent.enums.TypeConstant;
 import com.qak.logagent.utils.MdcUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
 
 /**
  * @Description 请描述类的业务用途
@@ -16,41 +16,13 @@ import javax.servlet.http.HttpServletResponse;
  **/
 public class Logger {
 
+    // 会被每个自定义的hook 去执行 第一次字节码增强 ，方法调用执行
+    public static  void info(Long costTime, Throwable throwable, Object ret, Method method, Object args){
 
-    public static  void info(Method method){
-
-        LogObjectProxy.doLog(method);
-
-    }
+        //LogObjectProxy.doLog(method);
 
 
 
-
-
-
-
-
-
-    /**
-     * @Name:  http 请求之前的记录
-     * @Date: 2021/1/19
-     *
-    */
-    public static void httpServletBefore(String logId,HttpServletRequest request) {
-
-        MdcUtils.setLogId(logId);
-        LogObjectProxy.setRequest(request);
-    }
-
-    /**
-     * @Name:  http 请求之后的记录
-     * @Date: 2021/1/19
-     *
-     */
-    public static void httpServletAfter(){
-
-        MdcUtils.mdcClear();
-        LogObjectProxy.clean();
     }
 
 
