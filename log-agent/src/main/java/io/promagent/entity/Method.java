@@ -1,4 +1,4 @@
-package com.qak.logagent.entity;
+package io.promagent.entity;
 
 
 import java.util.Arrays;
@@ -19,7 +19,7 @@ public class Method {
     private Throwable methodThrow;
     private String type;
 
-    public Method(){
+    public Method() {
 
     }
 
