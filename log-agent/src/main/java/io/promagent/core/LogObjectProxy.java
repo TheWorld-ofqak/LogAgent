@@ -1,18 +1,20 @@
-package com.qak.logagent.core;
+package io.promagent.core;
 
 
-import com.qak.logagent.entity.HttpRequest;
-import com.qak.logagent.entity.LogObject;
-import com.qak.logagent.entity.Method;
+import io.promagent.entity.HttpRequest;
+import io.promagent.entity.LogObject;
+import io.promagent.entity.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
-import static com.qak.logagent.utils.HttpRequestUtils.getHeaders;
-import static com.qak.logagent.utils.HttpRequestUtils.getParams;
+import static io.promagent.utils.HttpRequestUtils.getHeaders;
+import static io.promagent.utils.HttpRequestUtils.getParams;
 
 /**
  * @Descriptio 用于要打出来日志的日志代理   日志实体类的代理类，对日志进行打印
@@ -25,21 +27,21 @@ public class LogObjectProxy {
     private static final Logger logger = LoggerFactory.getLogger(LogObjectProxy.class);
 
 
-
-    public static  void setRequest(HttpServletRequest request){
+    public static void setRequest(HttpServletRequest request) {
 
         String requestUrl = request.getRequestURI();   // 得到url
         Map<String, String> headers = getHeaders(request);
         Map<String, String> params = getParams(request);
 
-        HttpRequest httpRequesT = new HttpRequest(requestUrl,headers,params);
+        HttpRequest httpRequesT = new HttpRequest(requestUrl, headers, params);
+
 
         LogObject currLogObject = LogContext.get();
         currLogObject.setHttpRequest(httpRequesT);
 
     }
 
-    public static  void setResponse(HttpServletResponse response){
+    public static void setResponse(HttpServletResponse response) {
 
 
         LogObject currLogObject = LogContext.get();
@@ -49,8 +51,7 @@ public class LogObjectProxy {
     }
 
 
-
-    public static void setMethod(Long execTime,Throwable error, Object ret, String sign, String type, Object... args){
+    public static void setMethod(Long execTime, Throwable error, Object ret, String sign, String type, Object... args) {
         Method method = LogContext.get().getMethod();
 
         method.setMethodSignature(sign);
@@ -62,15 +63,14 @@ public class LogObjectProxy {
     }
 
 
-
-    public static void setTempDate(Object tempObject){
+    public static void setTempDate(Object tempObject) {
 
         LogObject currLogObject = LogContext.get();
         currLogObject.setTempDate(tempObject);
 
     }
 
-    public static Object getTempDate(){
+    public static Object getTempDate() {
 
         LogObject currLogObject = LogContext.get();
         return currLogObject.getTempDate();
@@ -78,17 +78,14 @@ public class LogObjectProxy {
     }
 
 
-
     public static void doLog() {
 
         String jsonMsg = LogContext.get()
-                                   .getLogJSON();
+                .getLogJSON();
 
         logger.info(jsonMsg);
 
     }
-
-
 
 
     public static void clean() {

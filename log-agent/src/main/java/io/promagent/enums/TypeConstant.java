@@ -1,11 +1,11 @@
-package com.qak.logagent.enums;
+package io.promagent.enums;
 
 public enum TypeConstant {
 
-    Normal(0,"正常的http请求"),
-    CREATE(1,"Httpclient的http请求"),
-    ASYNC(2,"异步请求"),
-    DNS(3,"DNS的请求");
+    Normal(0, "正常的http请求"),
+    CREATE(1, "Httpclient的http请求"),
+    ASYNC(2, "异步请求"),
+    DNS(3, "DNS的请求");
 
 
     private Integer value;

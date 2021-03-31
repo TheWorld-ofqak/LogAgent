@@ -15,6 +15,7 @@
 package io.promagent.internal;
 
 //import static net.bytebuddy.matcher.ElementMatchers.isAbstract;
+
 import static net.bytebuddy.matcher.ElementMatchers.named;
 import static net.bytebuddy.matcher.ElementMatchers.not;
 import static net.bytebuddy.matcher.ElementMatchers.takesArgument;
@@ -119,7 +120,7 @@ public class Promagent {
             ElementMatcher.Junction<MethodDescription> junction = ElementMatchers
                     .named(methodSignature.getMethodName())
                     .and(not(ElementMatchers.<MethodDescription>isAbstract())
-                    .and(takesArguments(methodSignature.getParameterTypes().size())));
+                            .and(takesArguments(methodSignature.getParameterTypes().size())));
             for (int i = 0; i < methodSignature.getParameterTypes().size(); i++) {
                 junction = junction.and(takesArgument(i, named(methodSignature.getParameterTypes().get(i))));
             }
