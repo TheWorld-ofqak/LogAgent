@@ -37,19 +37,19 @@ public class Delegator {
     private static Delegator instance; // not thread-safe, but it is set only once in the agent's premain method.
 
     private final SortedSet<HookMetadata> hookMetadata;
- //   private final MetricsStore metricsStore;
+    //   private final MetricsStore metricsStore;
     private final ClassLoaderCache classLoaderCache;
     private final ThreadLocal<Map<Class<?>, Object>> threadLocal;
 
-   // private Delegator(SortedSet<HookMetadata> hookMetadata, MetricsStore metricsStore, ClassLoaderCache classLoaderCache) {
+    // private Delegator(SortedSet<HookMetadata> hookMetadata, MetricsStore metricsStore, ClassLoaderCache classLoaderCache) {
 
     private Delegator(SortedSet<HookMetadata> hookMetadata, ClassLoaderCache classLoaderCache) {
         this.hookMetadata = hookMetadata;
-  //      this.metricsStore = metricsStore;
+        //      this.metricsStore = metricsStore;
         this.classLoaderCache = classLoaderCache;
-  //      this.threadLocal = ThreadLocal.withInitial(HashMap::new);
+        //      this.threadLocal = ThreadLocal.withInitial(HashMap::new);
 
-        this.threadLocal = new ThreadLocal<Map<Class<?>, Object>>(){
+        this.threadLocal = new ThreadLocal<Map<Class<?>, Object>>() {
             @Override
             protected Map<Class<?>, Object> initialValue() {
                 return new HashMap<>(10);
@@ -104,7 +104,7 @@ public class Delegator {
                 .filter(hook -> methodNameAndNumArgsMatch(interceptedMethod, hook))
                 .map(hook -> loadHookClass(hook))
                 .filter(hookClass -> argumentTypesMatch(hookClass, interceptedMethod))
-                .filter(hookClass -> ! shouldBeSkipped(hookClass))
+                .filter(hookClass -> !shouldBeSkipped(hookClass))
                 .map(hookClass -> loadFromTheadLocalOrCreate(hookClass))
                 .collect(Collectors.toList());
     }
@@ -160,7 +160,7 @@ public class Delegator {
     private static boolean argumentTypesMatch(Class<?> hookClass, Method interceptedMethod) {
         List<Method> before = findHookMethods(Before.class, hookClass, interceptedMethod);
         List<Method> after = findHookMethods(After.class, hookClass, interceptedMethod);
-        return ! (before.isEmpty() && after.isEmpty());
+        return !(before.isEmpty() && after.isEmpty());
     }
 
     private static List<Method> findHookMethods(Class<? extends Annotation> annotation, Class<?> hookClass, Method interceptedMethod) throws HookException {
@@ -204,7 +204,7 @@ public class Delegator {
             throw new HookException("Method.getParameterAnnotations() returned an unexpected value. This is a bug in promagent.");
         }
         List<Class<?>> result = new ArrayList<>();
-        for (int i=0; i<allTypes.length; i++) {
+        for (int i = 0; i < allTypes.length; i++) {
             if (Arrays.stream(annotations[i])
                     .map(Annotation::annotationType)
                     .noneMatch(a -> Returned.class.equals(a) || Thrown.class.equals(a))) {
@@ -226,7 +226,7 @@ public class Delegator {
         } else {
             String errMsg = "Failed to create new instance of hook " + hookClass.getSimpleName() + ": ";
             try {
-               // Object newHookInstance = hookClass.getConstructor(MetricsStore.class).newInstance(metricsStore);
+                // Object newHookInstance = hookClass.getConstructor(MetricsStore.class).newInstance(metricsStore);
                 Object newHookInstance = hookClass.getConstructor().newInstance();
                 threadLocal.get().put(hookClass, newHookInstance);
                 return new HookInstance(newHookInstance, false);

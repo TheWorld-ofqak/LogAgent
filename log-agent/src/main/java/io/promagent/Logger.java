@@ -1,12 +1,8 @@
-package com.qak.logagent;
+package io.promagent;
 
 
-import com.qak.logagent.core.LogObjectProxy;
-import com.qak.logagent.enums.TypeConstant;
-import com.qak.logagent.utils.MdcUtils;
+import io.promagent.core.LogObjectProxy;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 /**
@@ -17,14 +13,12 @@ import java.lang.reflect.Method;
 public class Logger {
 
     // 会被每个自定义的hook 去执行 第一次字节码增强 ，方法调用执行
-    public static  void info(Long costTime, Throwable throwable, Object ret, Method method, Object args){
+    public static void info(Long costTime, Throwable throwable, Object ret, Method method, Object args) {
 
         //LogObjectProxy.doLog(method);
 
 
-
     }
-
 
 
     public static void error(Throwable frameError) {

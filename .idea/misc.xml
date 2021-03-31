@@ -15,6 +15,7 @@
         <option value="$PROJECT_DIR$/promagent-framework/promagent-exporter/pom.xml" />
         <option value="$PROJECT_DIR$/promagent-framework/promagent-api/pom.xml" />
         <option value="$PROJECT_DIR$/promagent-framework/pom.xml" />
+        <option value="$PROJECT_DIR$/log-agent/pom.xml" />
       </list>
     </option>
   </component>

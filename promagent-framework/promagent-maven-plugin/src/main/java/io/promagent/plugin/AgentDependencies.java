@@ -100,7 +100,7 @@ class AgentDependencies {
                 .filter(dependency -> dependency.getArtifactId().equals(artifact.getArtifactId()))
                 .map(Artifact::getVersion)
                 .findFirst();
-        if (builtInVersion.isPresent() && ! builtInVersion.get().equals(artifact.getVersion())) {
+        if (builtInVersion.isPresent() && !builtInVersion.get().equals(artifact.getVersion())) {
             String artifactName = artifact.getGroupId() + ":" + artifact.getArtifactId();
             throw new MojoExecutionException("Conflicting dependencies: Your project includes " + artifactName +
                     " version " + artifact.getVersion() + " but the promagent-maven-plugin is built with version " + builtInVersion.get());
@@ -110,7 +110,7 @@ class AgentDependencies {
     private static List<Artifact> resolveVersions(PluginDescriptor pluginDescriptor, String pluginArtifactId, List<ExpectedDependency> expectedDependencies) throws MojoExecutionException {
         List<Artifact> actualDependencies = new ArrayList<>();
         for (Artifact artifact : pluginDescriptor.getArtifacts()) {
-            if (! isExpected(artifact, expectedDependencies)) {
+            if (!isExpected(artifact, expectedDependencies)) {
                 continue;
             }
             if (isKnown(artifact, actualDependencies)) {
@@ -143,7 +143,7 @@ class AgentDependencies {
 
     private static Predicate<Artifact> artifactMatcherWithVersion(Artifact artifact) {
         return other -> artifactMatcherWithoutVersion(artifact).test(other) &&
-            artifact.getVersion().equals(other.getVersion());
+                artifact.getVersion().equals(other.getVersion());
     }
 
     private static boolean isExpected(Artifact artifact, List<ExpectedDependency> expectedDependencies) {

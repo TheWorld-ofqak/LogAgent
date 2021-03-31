@@ -1,4 +1,4 @@
-package com.qak.logagent.utils;
+package io.promagent.utils;
 
 
 import java.lang.reflect.Method;
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
@@ -17,14 +18,14 @@ import javax.servlet.ServletResponse;
 
 public class MethodUtils {
 
-    public static String getSignature(Method method){
+    public static String getSignature(Method method) {
 
-        return  method ==null ? "NULL" : method.getDeclaringClass().getSimpleName()+"."+method.getName();
+        return method == null ? "NULL" : method.getDeclaringClass().getSimpleName() + "." + method.getName();
     }
 
-    public static  String getArgs(Object[] args){
+    public static String getArgs(Object[] args) {
 
-        if(args == null){
+        if (args == null) {
             return "NULL";
         }
 
@@ -43,15 +44,10 @@ public class MethodUtils {
             result.add(JSONObject.toJSONString(args[i]));
         }
 
-    return JSONObject.toJSONString(result);
-
+        return JSONObject.toJSONString(result);
 
 
     }
-
-
-
-
 
 
 }

@@ -111,7 +111,7 @@ class AgentJar implements AutoCloseable {
     private void makeDirsRecursively(String path) throws MojoExecutionException {
         String[] parts = path.split("/+");
         String segment = "";
-        for (int i=0; i<parts.length-1; i++) {
+        for (int i = 0; i < parts.length - 1; i++) {
             segment += parts[i] + "/";
             if (!content.contains(segment)) {
                 try {

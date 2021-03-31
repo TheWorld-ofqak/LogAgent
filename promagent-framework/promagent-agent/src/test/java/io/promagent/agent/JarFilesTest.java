@@ -39,7 +39,7 @@ class JarFilesTest {
 
     @Test
     void testCmdlineParserVersioned() {
-        String[] cmdlineArgs = new String[] {
+        String[] cmdlineArgs = new String[]{
                 "-javaagent:promagent-1.0-SNAPSHOT.jar"
         };
         assertEquals("promagent-1.0-SNAPSHOT.jar", findAgentJarFromCmdline(asList(cmdlineArgs)).toString());
@@ -47,7 +47,7 @@ class JarFilesTest {
 
     @Test()
     void testCmdlineParserFailed() {
-        String[] cmdlineArgs = new String[] {
+        String[] cmdlineArgs = new String[]{
                 "-javaagent:/some/other/agent.jar",
                 "-jar",
                 "promagent.jar"

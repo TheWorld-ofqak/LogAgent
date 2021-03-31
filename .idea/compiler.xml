@@ -6,15 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="promagent-agent" />
-        <module name="logBysj" />
-        <module name="promagent-api" />
         <module name="promagent-internal" />
         <module name="promagent-exporter" />
+        <module name="log-agent" />
+        <module name="promagent-agent" />
         <module name="promagent-maven-plugin" />
+        <module name="promagent-api" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="logBysj" target="1.8" />
       <module name="promagent-example" target="1.8" />
     </bytecodeTargetLevel>
   </component>

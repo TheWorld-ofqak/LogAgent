@@ -21,20 +21,20 @@ import java.lang.annotation.Target;
 
 /**
  * A parameter annotated with @Returned can be used in a Hook's @After method to capture the return value of the instrumented method.
- *
+ * <p>
  * Example: In order to instrument the following method:
  *
  * <pre>
  *     int sum(int a, int b) {...}
  * </pre>
- *
+ * <p>
  * A Hook could use an @After method like this:
  *
  * <pre>
  *    {@literal @}After(method = "sum")
  *     void after(int a, int b, @Returned int sum) {...}
  * </pre>
- *
+ * <p>
  * The parameter annotated with @Returned is optional, if the hook does not use the return value, the parameter can be omitted.
  * <p/>
  * If the instrumented method terminates exceptionally, the type's default value is assigned to the parameter,
@@ -42,4 +42,5 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-public @interface Returned {}
+public @interface Returned {
+}

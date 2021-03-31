@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
 
 /**
  * A parameter annotated with @Thrown can be used in a Hook's @After method to capture an Exception thrown in an instrumented method.
- *
+ * <p>
  * Example: In order to instrument the following method:
  *
  * <pre>
@@ -29,14 +29,14 @@ import java.lang.annotation.Target;
  *         return a / b;
  *     }
  * </pre>
- *
+ * <p>
  * A Hook could use an @After method like this:
  *
  * <pre>
  *    {@literal @}After(method = "div")
  *     void after(int a, int b, @Returned int result, @Thrown Throwable exception) {...}
  * </pre>
- *
+ * <p>
  * In case everything goes well, the {@code result} will be the return value of {@code div()}, and {@code excption} will be {@code null}.
  * If {@code b} is {@code 0}, the {@code result} will be {@code 0}, and {@code exception} will be an {@link ArithmeticException} (division by zero).
  * <p/>
@@ -44,4 +44,5 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-public @interface Thrown {}
+public @interface Thrown {
+}

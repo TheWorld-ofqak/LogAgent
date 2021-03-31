@@ -1,9 +1,8 @@
-package com.qak.logagent.entity;
+package io.promagent.entity;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.qak.logagent.enums.TypeConstant;
-import com.qak.logagent.entity.Method;
+import io.promagent.enums.TypeConstant;
 
 /**
  * @Description Log 实体对象
@@ -13,13 +12,13 @@ import com.qak.logagent.entity.Method;
 public class LogObject {
 
 
-   // private  Long traceId;
-    private  String  type= TypeConstant.Normal.getDesc();
+    // private  Long traceId;
+    private String type = TypeConstant.Normal.getDesc();
 
-    private  HttpRequest httpRequest;
-    private  Method method;
-    private  Object tempDate;
-    private  String msg;
+    private HttpRequest httpRequest;
+    private Method method;
+    private Object tempDate;
+    private String msg;
 
     public String getMsg() {
         return msg;
@@ -72,11 +71,11 @@ public class LogObject {
 
     public String getLogJSON() {
         JSONObject resultJson = new JSONObject();
-      //  resultJson.put("traceId",traceId);
-        resultJson.put("type",type);
-        resultJson.put("Request",httpRequest);
-        resultJson.put("method",method);
-        resultJson.put("msg",msg);
+        //  resultJson.put("traceId",traceId);
+        resultJson.put("type", type);
+        resultJson.put("Request", httpRequest);
+        resultJson.put("method", method);
+        resultJson.put("msg", msg);
         return resultJson.toJSONString();
     }
 

@@ -84,7 +84,7 @@ public class HookMetadataParser {
 
     /**
      * See {@link #parse()}.
-     *
+     * <p>
      * The classNameFilter is used to parse only specific classes from the JAR files.
      */
     public SortedSet<HookMetadata> parse(Predicate<String> classNameFilter) throws IOException, ClassNotFoundException {
@@ -139,7 +139,7 @@ public class HookMetadataParser {
 
     private byte[] readBinaryRepresentation(String className) throws ClassNotFoundException {
         String classFileName = "/" + className.replace(".", "/") + ".class";
-        try(InputStream stream = getResourceAsStream(classFileName)) {
+        try (InputStream stream = getResourceAsStream(classFileName)) {
             if (stream == null) {
                 throw new ClassNotFoundException(className);
             }
@@ -162,7 +162,8 @@ public class HookMetadataParser {
                     throw new IOException("Invalid JAR file or classes directory: " + hookJar);
                 }
                 return url.openStream();
-            } catch (FileNotFoundException e) {}
+            } catch (FileNotFoundException e) {
+            }
         }
         throw new FileNotFoundException(name + " not found in [" + hookJars.stream().map(Path::toString).reduce("", (s1, s2) -> s1 + ", " + s2) + "]");
     }
@@ -250,7 +251,7 @@ public class HookMetadataParser {
 
         private SortedSet<MethodSignature> build() {
             List<String> strippedParameterTypes = parameterTypes.stream()
-                    .filter(p -> ! p.isReturnedOrThrown)
+                    .filter(p -> !p.isReturnedOrThrown)
                     .map(p -> p.type)
                     .collect(Collectors.toList());
             SortedSet<MethodSignature> result = new TreeSet<>();
@@ -276,11 +277,13 @@ public class HookMetadataParser {
     private static class AnnotationValueCollector extends AnnotationVisitor {
         private final Consumer<String> consumer;
         private final String methodName;
+
         private AnnotationValueCollector(String methodName, Consumer<String> consumer, int api, AnnotationVisitor av) {
             super(api, av);
             this.consumer = consumer;
             this.methodName = methodName;
         }
+
         @Override
         public AnnotationVisitor visitArray(String name) {
             if (methodName.equals(name)) {
@@ -298,7 +301,6 @@ public class HookMetadataParser {
 
     /**
      * List all Java classes found in the JAR files.
-     *
      */
     private static Set<String> listAllJavaClasses(Set<Path> hookJars, Predicate<String> classNameFilter) throws IOException {
         Set<String> result = new TreeSet<>();
@@ -308,8 +310,7 @@ public class HookMetadataParser {
                 try (Stream<Path> dirEntries = Files.walk(hookJar)) {
                     addClassNames(dirEntries.map(hookJar::relativize).map(Path::toString), result, classNameFilter);
                 }
-            }
-            else if (hookJar.toFile().isFile()) {
+            } else if (hookJar.toFile().isFile()) {
                 try (ZipFile zipFile = new ZipFile(hookJar.toFile())) {
                     addClassNames(zipFile.stream().map(ZipEntry::getName), result, classNameFilter);
                 }

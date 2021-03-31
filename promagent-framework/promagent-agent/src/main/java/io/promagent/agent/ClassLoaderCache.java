@@ -62,7 +62,7 @@ public class ClassLoaderCache {
 
     public synchronized ClassLoader currentClassLoader() {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-        if (! cache.containsKey(contextClassLoader)) {
+        if (!cache.containsKey(contextClassLoader)) {
             cache.put(contextClassLoader, new PerDeploymentClassLoader(pathsToURLs(perDeploymentJars), sharedClassLoader, contextClassLoader));
         }
         return cache.get(contextClassLoader);
@@ -71,7 +71,7 @@ public class ClassLoaderCache {
     private static URL[] pathsToURLs(List<Path> paths) {
         try {
             URL[] result = new URL[paths.size()];
-            for (int i=0; i<paths.size(); i++) {
+            for (int i = 0; i < paths.size(); i++) {
                 result[i] = paths.get(i).toUri().toURL();
             }
             return result;

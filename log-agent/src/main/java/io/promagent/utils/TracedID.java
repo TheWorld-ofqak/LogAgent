@@ -1,4 +1,4 @@
-package com.qak.logagent.utils;
+package io.promagent.utils;
 
 
 import java.util.UUID;
@@ -12,8 +12,8 @@ import java.util.UUID;
 public class TracedID {
 
 
-    public  static  String getTracedId(){
-      return  UUID.randomUUID().toString().substring(2,14);
+    public static String getTracedId() {
+        return UUID.randomUUID().toString().substring(2, 14);
     }
 
 
